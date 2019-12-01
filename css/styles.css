@@ -19,6 +19,7 @@ div.setParams {
   align-items: center;
   background-color: cornflowerblue;
   margin-right: 50px;
+  margin-bottom: 20px;
 }
 
 div.clearParams {
@@ -27,6 +28,7 @@ div.clearParams {
   justify-content: center;
   align-items: center;
   background-color: brown;
+  margin-bottom: 20px;
 }
 
 a.buttonText {
