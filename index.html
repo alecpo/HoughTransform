@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+    <script async src="js/opencv.js"></script>
+    <title>Circle Recognizer</title>
+  </head>
+  <body>
+    <header
+      style="background-color: blueviolet; text-align: center; padding-top: 20px; padding-bottom: 20px;"
+    >
+      <h1
+        style="text-align: center; color: white; font-family: 'Trebuchet MS';"
+      >
+        ~Trabalho Prático de PDI~
+      </h1>
+      <h2
+        style="text-align: center; color: white; font-family: 'Trebuchet MS';"
+      >
+        Autor: Alessandro Cézar
+      </h2>
+    </header>
+    <h2 style="text-align: center; font-family: 'Trebuchet MS';">
+      Parâmetros
+    </h2>
+    <div
+      class="params"
+      style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;"
+    >
+      <div><label>dp</label><input style="width: 100px" /></div>
+      <div><label>Distância Mínima</label><input style="width: 100px" /></div>
+      <div><label>Parâmetro 1</label><input style="width: 100px" /></div>
+      <div><label>Parâmetro 2</label><input style="width: 100px" /></div>
+      <div><label>Raio Mínimo</label><input style="width: 100px" /></div>
+      <div><label>Raio Máximo</label><input style="width: 100px" /></div>
+    </div>
+    <div class="paramsButtonsActionRow">
+      <div class="setParams">
+        <a class="buttonText" id="setParams" onclick="setParams();"
+          >Setar Parâmetros</a
+        >
+      </div>
+      <div class="clearParams">
+        <a class="buttonText" id="clearParams" onclick="clearParams()"
+          >Limpar Parâmetros</a
+        >
+      </div>
+    </div>
+    <img id="imagem_entrada" />
+    <input type="file" id="arquivo_entrada" />
+    <canvas id="output"></canvas>
+  </body>
+  <script>
+    let img_entrada = document.getElementById("imagem_entrada"); let
+    arquivo_entrada = document.getElementById("arquivo_entrada");
+    arquivo_entrada.addEventListener( "change", e => { img_entrada.src =
+    URL.createObjectURL(e.target.files[0]); }, false ); setParams.onclick =
+    function() { let originalSrc = cv.imread(img_entrada); let src =
+    cv.imread(img_entrada); let dst = cv.Mat.zeros(src.rows, src.cols,
+    cv.CV_8U); let circles = new cv.Mat(); let color = new cv.Scalar(255, 0, 0);
+    cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0); // You can try more different
+    parameters cv.HoughCircles(src, circles, cv.HOUGH_GRADIENT, 1, 20, 75, 40,
+    0, 70); // draw circles for (let i = 0; i < circles.cols; ++i) { let x =
+    circles.data32F[i * 3]; let y = circles.data32F[i * 3 + 1]; let radius =
+    circles.data32F[i * 3 + 2]; let center = new cv.Point(x, y);
+    cv.circle(originalSrc, center, radius, [255, 0, 0, 255], 2); }
+    console.log(circles.cols); cv.imshow("output", originalSrc); src.delete();
+    dst.delete(); circles.delete(); }; const setParams = (dp, distMin, param1,
+    param2, minRadius, maxRadius) => { alert("teste"); };
+  </script>
+</html>

@@ -1,0 +1,42 @@
+div.params div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+div.paramsButtonsActionRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+div.setParams {
+  width: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: cornflowerblue;
+  margin-right: 80px;
+}
+
+div.clearParams {
+  width: 160px;
+  padding: 10px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: brown;
+}
+
+a.buttonText {
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: "Trebuchet MS";
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+}
