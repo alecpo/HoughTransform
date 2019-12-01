@@ -13,17 +13,15 @@ div.paramsButtonsActionRow {
 }
 
 div.setParams {
-  width: 150px;
   padding: 10px;
   border-radius: 10px;
   justify-content: center;
   align-items: center;
   background-color: cornflowerblue;
-  margin-right: 80px;
+  margin-right: 50px;
 }
 
 div.clearParams {
-  width: 160px;
   padding: 10px;
   border-radius: 10px;
   justify-content: center;

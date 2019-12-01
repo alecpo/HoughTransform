@@ -24,27 +24,53 @@
       </h2>
     </header>
     <h2 style="text-align: center; font-family: 'Trebuchet MS';">
-      Parâmetros
+      Parâmetros para a Transformada de Hough
     </h2>
     <div
       class="params"
       style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;"
     >
-      <div><label>dp</label><input style="width: 100px" /></div>
-      <div><label>Distância Mínima</label><input style="width: 100px" /></div>
-      <div><label>Parâmetro 1</label><input style="width: 100px" /></div>
-      <div><label>Parâmetro 2</label><input style="width: 100px" /></div>
-      <div><label>Raio Mínimo</label><input style="width: 100px" /></div>
-      <div><label>Raio Máximo</label><input style="width: 100px" /></div>
+      <div>
+        <label>dp</label><input value="1" id="dp" style="width: 100px" />
+      </div>
+      <div>
+        <label>Distância Mínima</label
+        ><input value="20" id="minDist" style="width: 100px" />
+      </div>
+      <div>
+        <label>Parâmetro 1</label
+        ><input value="75" id="param1" style="width: 100px" />
+      </div>
+      <div>
+        <label>Parâmetro 2</label
+        ><input value="40" id="param2" style="width: 100px" />
+      </div>
+      <div>
+        <label>Raio Mínimo</label
+        ><input value="0" id="minRadius" style="width: 100px" />
+      </div>
+      <div>
+        <label>Raio Máximo</label
+        ><input value="70" id="maxRadius" style="width: 100px" />
+      </div>
     </div>
     <div class="paramsButtonsActionRow">
       <div class="setParams">
-        <a class="buttonText" id="setParams" onclick="setParams();"
-          >Setar Parâmetros</a
+        <a
+          class="buttonText"
+          onclick="applyHough(
+             getElementById('dp').value !== '' ? parseInt(getElementById('dp').value) : 0,
+             getElementById('minDist').value !== '' ? parseInt(getElementById('minDist').value) : 0,
+             getElementById('param1').value !== '' ? parseInt(getElementById('param1').value) : 0,
+             getElementById('param2').value !== '' ? parseInt(getElementById('param2').value) : 0,
+             getElementById('minRadius').value !== '' ? parseInt(getElementById('minRadius').value) : 0,
+             getElementById('maxRadius').value !== '' ? parseInt(getElementById('maxRadius').value) : 0
+            );"
+          >Aplicar Filtro</a
         >
       </div>
       <div class="clearParams">
-        <a class="buttonText" id="clearParams" onclick="clearParams()"
+        <a class="buttonText" onclick="clearParamsButton();"
           >Limpar Parâmetros</a
         >
       </div>
@@ -54,21 +80,64 @@
     <canvas id="output"></canvas>
   </body>
   <script>
-    let img_entrada = document.getElementById("imagem_entrada"); let
-    arquivo_entrada = document.getElementById("arquivo_entrada");
-    arquivo_entrada.addEventListener( "change", e => { img_entrada.src =
-    URL.createObjectURL(e.target.files[0]); }, false ); setParams.onclick =
-    function() { let originalSrc = cv.imread(img_entrada); let src =
-    cv.imread(img_entrada); let dst = cv.Mat.zeros(src.rows, src.cols,
-    cv.CV_8U); let circles = new cv.Mat(); let color = new cv.Scalar(255, 0, 0);
-    cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0); // You can try more different
-    parameters cv.HoughCircles(src, circles, cv.HOUGH_GRADIENT, 1, 20, 75, 40,
-    0, 70); // draw circles for (let i = 0; i < circles.cols; ++i) { let x =
-    circles.data32F[i * 3]; let y = circles.data32F[i * 3 + 1]; let radius =
-    circles.data32F[i * 3 + 2]; let center = new cv.Point(x, y);
-    cv.circle(originalSrc, center, radius, [255, 0, 0, 255], 2); }
-    console.log(circles.cols); cv.imshow("output", originalSrc); src.delete();
-    dst.delete(); circles.delete(); }; const setParams = (dp, distMin, param1,
-    param2, minRadius, maxRadius) => { alert("teste"); };
+    let img_entrada = document.getElementById("imagem_entrada");
+    let arquivo_entrada = document.getElementById("arquivo_entrada");
+
+    arquivo_entrada.addEventListener(
+      "change",
+      e => {
+        img_entrada.src = URL.createObjectURL(e.target.files[0]);
+      },
+      false
+    );
+
+    const clearParamsButton = () => {
+      document.getElementById("dp").value = 1;
+      document.getElementById("minDist").value = 20;
+      document.getElementById("param1").value = 75;
+      document.getElementById("param2").value = 40;
+      document.getElementById("minRadius").value = 0;
+      document.getElementById("maxRadius").value = 70;
+    };
+
+    /* img_entrada.onload = function (){
+      applyHough  
+    } */
+
+    applyHough = function(dp, minDist, param1, param2, minRadius, maxRadius) {
+      //alert(typeof dp);
+      let originalSrc = cv.imread(img_entrada);
+      let src = cv.imread(img_entrada);
+      let dst = cv.Mat.zeros(src.rows, src.cols, cv.CV_8U);
+      let circles = new cv.Mat();
+      let color = new cv.Scalar(255, 0, 0);
+
+      cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
+      // You can try more differentparameters
+      cv.HoughCircles(
+        src,
+        circles,
+        cv.HOUGH_GRADIENT,
+        dp,
+        minDist,
+        param1,
+        param2,
+        minRadius,
+        maxRadius
+      );
+      // draw circles
+      for (let i = 0; i < circles.cols; ++i) {
+        let x = circles.data32F[i * 3];
+        let y = circles.data32F[i * 3 + 1];
+        let radius = circles.data32F[i * 3 + 2];
+        let center = new cv.Point(x, y);
+        cv.circle(originalSrc, center, radius, [255, 0, 0, 255], 2);
+      }
+      //console.log(circles.cols);
+      cv.imshow("output", originalSrc);
+      src.delete();
+      dst.delete();
+      circles.delete();
+    };
   </script>
 </html>
