@@ -31,26 +31,55 @@
       style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;"
     >
       <div>
-        <label>dp</label><input value="1" id="dp" style="width: 100px" />
+        <label class="tooltip"
+          ><span class="tooltiptext"
+            >Relação inversa da resolução do acumulador para a resolução da
+            imagem. Por exemplo, se dp = 1, o acumulador tem a mesma resolução
+            que a imagem de entrada. Se dp = 2, o acumulador tem metade da
+            largura e altura.</span
+          >DP</label
+        ><input value="1" id="dp" style="width: 100px" />
       </div>
       <div>
-        <label>Distância Mínima</label
+        <label class="tooltip"
+          ><span class="tooltiptext"
+            >Distância mínima entre os centros dos círculos detectados. Se o
+            parâmetro for muito pequeno, vários círculos vizinhos podem ser
+            detectados falsamente, além de um verdadeiro. Se for muito grande,
+            alguns círculos poderão ser perdidos.</span
+          >Distância Mínima</label
         ><input value="20" id="minDist" style="width: 100px" />
       </div>
       <div>
-        <label>Parâmetro 1</label
+        <label class="tooltip"
+          ><span class="tooltiptext"
+            >Primeiro parâmetro específico do método. É o limite mais alto dos
+            dois passados ​​para o detector de borda Canny (o inferior é duas
+            vezes menor).</span
+          >Parâmetro 1</label
         ><input value="75" id="param1" style="width: 100px" />
       </div>
       <div>
-        <label>Parâmetro 2</label
+        <label class="tooltip"
+          ><span class="tooltiptext">
+            Segundo parâmetro específico do método. É o limite do acumulador
+            para os centros circulares no estágio de detecção. Quanto menor,
+            mais círculos falsos podem ser detectados. Os círculos,
+            correspondentes aos valores maiores do acumulador, serão retornados
+            primeiro.</span
+          >Parâmetro 2</label
         ><input value="40" id="param2" style="width: 100px" />
       </div>
       <div>
-        <label>Raio Mínimo</label
+        <label class="tooltip"
+          ><span class="tooltiptext">Raio mínimo do círculo.</span>Raio
+          Mínimo</label
         ><input value="0" id="minRadius" style="width: 100px" />
       </div>
       <div>
-        <label>Raio Máximo</label
+        <label class="tooltip"
+          ><span class="tooltiptext">Raio máximo do círculo.</span>Raio
+          Máximo</label
         ><input value="70" id="maxRadius" style="width: 100px" />
       </div>
     </div>
