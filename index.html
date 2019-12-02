@@ -75,10 +75,24 @@
         >
       </div>
     </div>
-    <img id="imagem_entrada" />
     <input type="file" id="arquivo_entrada" />
-    <canvas id="output"></canvas>
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <div
+        style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
+      >
+        <h3>Imagem Original</h3>
+        <img id="imagem_entrada" />
+      </div>
+      <div
+        style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
+      >
+        <h3>Resultado</h3>
+        <canvas id="output"></canvas>
+      </div>
+      <h3 id="resultado" style="margin-left: 30px;"></h3>
+    </div>
   </body>
+
   <script>
     let img_entrada = document.getElementById("imagem_entrada");
     let arquivo_entrada = document.getElementById("arquivo_entrada");
@@ -100,12 +114,7 @@
       document.getElementById("maxRadius").value = 70;
     };
 
-    /* img_entrada.onload = function (){
-      applyHough  
-    } */
-
     applyHough = function(dp, minDist, param1, param2, minRadius, maxRadius) {
-      //alert(typeof dp);
       let originalSrc = cv.imread(img_entrada);
       let src = cv.imread(img_entrada);
       let dst = cv.Mat.zeros(src.rows, src.cols, cv.CV_8U);
@@ -113,7 +122,6 @@
       let color = new cv.Scalar(255, 0, 0);
 
       cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
-      // You can try more differentparameters
       cv.HoughCircles(
         src,
         circles,
@@ -125,7 +133,6 @@
         minRadius,
         maxRadius
       );
-      // draw circles
       for (let i = 0; i < circles.cols; ++i) {
         let x = circles.data32F[i * 3];
         let y = circles.data32F[i * 3 + 1];
@@ -133,7 +140,8 @@
         let center = new cv.Point(x, y);
         cv.circle(originalSrc, center, radius, [255, 0, 0, 255], 2);
       }
-      //console.log(circles.cols);
+      document.getElementById("resultado").innerHTML =
+        "Número de círculos encontrados: " + circles.cols;
       cv.imshow("output", originalSrc);
       src.delete();
       dst.delete();
